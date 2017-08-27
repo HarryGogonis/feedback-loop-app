@@ -5406,6 +5406,12 @@ react-error-overlay@^1.0.10:
     settle-promise "1.0.0"
     source-map "0.5.6"
 
+react-google-button@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/react-google-button/-/react-google-button-0.3.0.tgz#84fc471d01be9b4a06bda3429c18cca4934079e1"
+  dependencies:
+    prop-types "^15.5.8"
+
 react-intl@^2.2.3:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/react-intl/-/react-intl-2.3.0.tgz#e1df6af5667fdf01cbe4aab20e137251e2ae5142"

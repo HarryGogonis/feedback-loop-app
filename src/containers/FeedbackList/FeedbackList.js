@@ -13,6 +13,8 @@ import {
 import Feedback from '../Feedback'
 
 type Props = {
+  siteKey: string,
+  // mapStateToProps
   site: {
     domain: string,
     feedback?: { [string]: string }
