@@ -2,12 +2,15 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { compose } from 'redux'
+import moment from 'moment'
+import Card from 'grommet/components/Card';
+
+import Rating from '../../components/Rating';
 import type { Feedback as FeedbackType } from '../../types/Feedback'
 
 import {
   firebaseConnect,
   dataToJS,
-  pathToJS,
   isLoaded
 } from 'react-redux-firebase';
 type Props = {
@@ -17,14 +20,16 @@ type Props = {
 
 const Feedback = ({ feedback, id }: Props) => {
   if (isLoaded(feedback)) {
+    const time = moment(feedback.timestamp).fromNow()
     return (
-      <li>
-        { new Date(feedback.timestamp).toLocaleString() }
-        <pre>{JSON.stringify(feedback)}</pre>
-      </li>
+      <Card
+        label={<Rating rating={feedback.rating} />}
+        description={feedback.comment}
+        link={time}
+      />
     );
   }
-  return <p>oops!</p>;
+  return null;
 }
 
 export default compose(

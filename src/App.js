@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import 'grommet/grommet.min.css';
 
-import './App.css';
 import createStore from './state';
 import Home from './containers/Home';
 
