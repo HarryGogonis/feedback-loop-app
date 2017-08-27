@@ -1,3 +1,4 @@
 export type Feedback = {
-  rating: number
+  rating: number,
+  timestamp: number,
 }
