@@ -15,10 +15,7 @@ import Feedback from '../Feedback'
 type Props = {
   siteKey: string,
   // mapStateToProps
-  site: {
-    domain: string,
-    feedback?: { [string]: string }
-  },
+  feedback: { [string]: string },
   auth: any
 };
 
@@ -26,7 +23,8 @@ const siteKey = '-KsUNOgWtpM_Il-X3Dnm'; // TODO do not hardcode
 
 class FeedbackList extends React.Component<Props> {
   getFeedbacks = () => {
-    const { feedback } = this.props.site;
+    console.log(this.props);
+    const feedback  = this.props.feedbackList;
     if (!feedback) {
       return;
     }
@@ -34,7 +32,7 @@ class FeedbackList extends React.Component<Props> {
     return keys.map(key => {
       const value = feedback[key];
       return value && <Feedback id={value} key={key}/>
-    }).reverse()
+    })
   }
 
   render() {
@@ -45,13 +43,14 @@ class FeedbackList extends React.Component<Props> {
     );
   }
 }
+
 export default compose(
   firebaseConnect([
-    `sites/${siteKey}`
+    `sites/${siteKey}/feedback#limitToFirst=2`
   ]),
   connect(
     ({ firebase }) => ({ // state.firebase
-      site: dataToJS(firebase, `sites/${siteKey}`) || {}, // in v2 todos: firebase.data.todos
+      feedbackList: dataToJS(firebase, `sites/${siteKey}/feedback`) || {}, // in v2 todos: firebase.data.todos
       auth: pathToJS(firebase, 'auth') // in v2 todos: firebase.auth
     })
   )

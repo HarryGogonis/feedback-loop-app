@@ -39,8 +39,12 @@ class Login extends React.Component<Props> {
       );
     }
 
+    if (!isEmpty(profile) && profile.sites) {
+      return <Redirect to="/sites" />
+    }
+
     if (!isEmpty(profile)) {
-      console.log(profile.sites);
+      return <Redirect to="/sites/new" />
     }
 
     return null;

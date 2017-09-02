@@ -9,7 +9,7 @@ type Props = {
 };
 
 export default ({ name }: Props) => (
-  <Header colorIndex="neutral-1">
+  <Header>
     <Title>
       {name}
     </Title>

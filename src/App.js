@@ -16,7 +16,7 @@ const store = createStore();
 export default () => (
   <Provider store={store}>
     <Router>
-      <App>
+      <App centered={false}>
         <Article>
           <Header />
           <Routes />
