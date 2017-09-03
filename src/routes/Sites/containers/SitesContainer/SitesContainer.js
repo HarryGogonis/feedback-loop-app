@@ -5,27 +5,34 @@ import { compose } from 'redux'
 import {
   firebaseConnect,
   pathToJS,
-  isLoaded
+  isLoaded,
+  isEmpty
 } from 'react-redux-firebase';
 
-import Box from 'grommet/components/Box';
 import Spinning from 'grommet/components/icons/Spinning';
+import SitesList from '../../components/SitesList';
 
 type Props = {
-  match: any,
   sites: Array<any>
 }
 
-const Sites = (props: Props) => {
-  console.log(props)
-  return <Spinning />;
+const Sites = ({ sites }: Props) => {
+  if (!isLoaded(sites)) {
+      return <Spinning />;
+  }
+
+  if (isEmpty(sites)) {
+    return null;
+  }
+
+  return <SitesList sites={sites} />
 }
 
 export default compose(
   firebaseConnect(),
   connect(
     ({ firebase }) => ({
-      profile: pathToJS(firebase, 'profile'),
+      sites: pathToJS(firebase, 'profile/sites'),
     })
   )
 )(Sites)

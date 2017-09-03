@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import {
   firebaseConnect,
-  dataToJS,
+  pathToJS,
   isLoaded
 } from 'react-redux-firebase';
 
@@ -20,25 +20,46 @@ import Footer from 'grommet/components/Footer';
 
 type Props = {
   firebase: any,
+  auth: {
+    uid: string
+  }
 }
 
 type State = {
-  domain?: string,
+  domain: string,
+  error: string,
 }
 
 class Site extends React.Component<Props, State> {
+  state = {
+    domain: '',
+    error: '',
+  }
+
   onSubmit = (ev) => {
+    const { domain } = this.state;
+    const { firebase, auth } = this.props;
     ev.preventDefault();
-    console.log(this.state);
+
+    if (!domain) {
+      return;
+    }
+
+    firebase.ref('/sites').push({ domain }).then(snapshot => {
+      firebase.ref(`/users/${auth.uid}/sites`).push(snapshot.key)
+    });
   }
 
   setDomain = (ev) => {
+    const domain = ev.target.value;
+    const error = domain ? '' : 'Required';
     this.setState({
-      domain: ev.target.value
+      domain,
+      error
     })
   }
-  render() {
 
+  render() {
     return (
       <Box align="center">
         <Form onSubmit={this.onSubmit}>
@@ -46,7 +67,7 @@ class Site extends React.Component<Props, State> {
             <Heading>Create a Site</Heading>
           </Header>
           <FormFields>
-            <FormField label="Website">
+            <FormField label="Website" error={this.state.error}>
               <TextInput
                 id='domain'
                 name='domain'
@@ -69,4 +90,9 @@ class Site extends React.Component<Props, State> {
 }
 export default compose(
   firebaseConnect(),
+  connect(
+    ({ firebase }) => ({
+      auth: pathToJS(firebase, 'auth'),
+    })
+  )
 )(Site)
