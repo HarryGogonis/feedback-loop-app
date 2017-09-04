@@ -8,10 +8,7 @@ export default (rootReducer) => {
     thunk.withExtraArgument(getFirebase),
   ];
   const enhancers = [
-    reactReduxFirebase(firebaseConfig, {
-      userProfile: 'users',
-       profileParamsToPopulate: [ 'sites:sites' ]
-    }),
+    reactReduxFirebase(firebaseConfig, { userProfile: 'users' }),
   ];
 
   enhancers.push(applyMiddleware(...middleware));

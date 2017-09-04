@@ -22,6 +22,9 @@ type Props = {
   firebase: any,
   auth: {
     uid: string
+  },
+  history: {
+    push: (string) => void
   }
 }
 
@@ -46,7 +49,9 @@ class Site extends React.Component<Props, State> {
     }
 
     firebase.ref('/sites').push({ domain }).then(snapshot => {
-      firebase.ref(`/users/${auth.uid}/sites`).push(snapshot.key)
+      const key = snapshot.key
+      firebase.ref(`/users/${auth.uid}/sites`).push(key);
+      this.props.history.push(`/sites/${key}`)
     });
   }
 

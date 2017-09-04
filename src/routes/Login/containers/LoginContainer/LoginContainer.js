@@ -40,7 +40,11 @@ class Login extends React.Component<Props> {
     }
 
     if (!isEmpty(profile) && profile.sites) {
-      return <Redirect to="/sites" />
+      const keys = Object.keys(profile.sites);
+      // For now, grab the first site
+      // Later we can have a "selected site" on profile.
+      const siteKey = profile.sites[keys[0]];
+      return <Redirect to={`/sites/${siteKey}`} />
     }
 
     if (!isEmpty(profile)) {
